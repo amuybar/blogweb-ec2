@@ -19,7 +19,7 @@ const ProfilePage = () => {
     }
 
     // Fetch user details
-    fetch('http://54.221.51.93/api/user', {
+    fetch('https://api.nairobidossier.co.ke/api/user', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -33,7 +33,7 @@ const ProfilePage = () => {
   }, [token]);
 
   const fetchBlogs = (tab) => {
-    let endpoint = 'http://54.221.51.93/api/blogs';
+    let endpoint = 'https://api.nairobidossier.co.ke/api/blogs';
     if (tab === 'Liked') endpoint = '/api/blogs/liked';
     if (tab === 'Viewed') endpoint = '/api/blogs/viewed';
 

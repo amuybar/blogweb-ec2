@@ -73,7 +73,7 @@ const BlogEditor = () => {
       setIsLoading(true);
 
       // API Call
-      const response = await fetch("http://54.221.51.93/api/blogs", {
+      const response = await fetch("https://api.nairobidossier.co.ke/api/blogs", {
         method: "POST",
         body: formData,
         // Remove Content-Type header to let browser set it automatically

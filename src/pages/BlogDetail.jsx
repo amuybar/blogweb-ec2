@@ -12,7 +12,7 @@ const BlogDetail = () => {
     const fetchBlogDetails = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`http://54.221.51.93/api/blogs/${slug}`);
+        const response = await fetch(`https://api.nairobidossier.co.ke/api/blogs/${slug}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

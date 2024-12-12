@@ -18,7 +18,7 @@ const Home = () => {
     const fetchBlogs = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/blogs", {
+        const response = await fetch("https://api.nairobidossier.co.ke/api/blogs", {
           method: 'GET',
           headers: {
             'Accept': 'application/json',

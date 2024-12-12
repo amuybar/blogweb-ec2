@@ -20,7 +20,7 @@ const AuthPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isRegister ? '/api/register' : '/api/login';
+    const url = isRegister ? 'https://api.nairobidossier.co.ke/api/register' : 'https://api.nairobidossier.co.ke/api/login';
 
     try {
       const response = await fetch(url, {
