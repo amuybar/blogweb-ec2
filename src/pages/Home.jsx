@@ -25,7 +25,6 @@ const Home = () => {
             }
           });
           
-  
         if (!response.ok) {
           // Try to parse error response
           const errorText = await response.text();
@@ -38,7 +37,9 @@ const Home = () => {
           throw new Error('Response is not JSON');
         }
   
-        const data = await response.json();
+        const dataJson = await response.json();
+        const data = dataJson.data;
+        console.log(data)
         
         if (!Array.isArray(data)) {
           throw new Error('Invalid data format');
@@ -149,7 +150,7 @@ const Home = () => {
           <h3 className="text-xl font-semibold text-gray-900 mb-2">{favoriteBlog.title}</h3>
           <p className="text-gray-700 mb-4">{favoriteBlog.summary}</p>
           <a 
-            href={`/blogs/${favoriteBlog.id}`} 
+            href={`/blogs/${favoriteBlog.slug}`} 
             className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
           >
             Read Full Article
@@ -183,7 +184,7 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredBlogs.map((blog) => (
             <div
-              key={blog.id}
+              key={blog.slug}
               className="bg-white border rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
             >
               <img 
@@ -196,7 +197,7 @@ const Home = () => {
                 <p className="text-gray-600 mb-4">{blog.summary}</p>
                 <div className="flex justify-between items-center">
                   
-                   <a href={`/blogs/${blog.id}`}
+                   <a href={`/blogs/${blog.slug}`}
                     className="text-blue-500 hover:underline"
                   >
                     Read More

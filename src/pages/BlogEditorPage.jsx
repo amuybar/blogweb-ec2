@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EditableArea from "../components/EditableArea/EditableArea";
 import ExpandableInput from "../components/Input/InputComponent";
+import { toast } from "react-toastify";
 
 const BlogEditor = () => {
   const [editableContent, setEditableContent] = useState("");
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
-  const [authorId, setAuthorId] = useState("");
+  // const [authorId, setAuthorId] = useState("4f6460d2-5d70-48cc-a682-a5178a2a7cf8");
   const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
+const authorId= "4f6460d2-5d70-48cc-a682-a5178a2a7cf8";
   // Load author ID from localStorage
-  useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    if (storedUserId) {
-      setAuthorId(storedUserId);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUserId = localStorage.getItem("userId");
+  //   if (storedUserId) {
+  //     setAuthorId(storedUserId);
+  //   }
+  // }, []);
 
   // Handles file input changes
   const handleFileChange = (e) => {
@@ -25,31 +28,90 @@ const BlogEditor = () => {
   };
 
   // Handles form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!title || !summary || !editableContent || !image) {
-      alert("All fields are required, including an image.");
+  
+    // Validation checks
+    if (!title.trim()) {
+      toast.error("Title is required");
       return;
     }
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("summary", summary);
-    formData.append("body", editableContent);
-    formData.append("authorId", authorId);
-    formData.append("image", image);
-
-    console.log("Form Data:", {
-      title,
-      summary,
-      body: editableContent,
-      authorId,
-      image: image.name,
-    });
-
-    // Add your API call or further submission logic here
+  
+    if (!summary.trim()) {
+      toast.error("Summary is required");
+      return;
+    }
+  
+    if (!editableContent.trim()) {
+      toast.error("Blog content is required");
+      return;
+    }
+  
+    if (!image) {
+      toast.error("Please upload an image");
+      return;
+    }
+  
+    try {
+      // Create FormData
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("summary", summary);
+      formData.append("body", editableContent);
+      formData.append("author", authorId);
+      formData.append("image", image);
+  
+      // Logging for debugging
+      console.log("Form Data:", {
+        title,
+        summary,
+        body: editableContent,
+        authorId,
+        image: image.name,
+      });
+  
+      // Show loading state
+      setIsLoading(true);
+  
+      // API Call
+      const response = await fetch('http://54.221.51.93/api/blogs', {
+        method: 'POST',
+        body: formData,
+        // Remove Content-Type header to let browser set it automatically 
+        // This is important for FormData with file uploads
+      });
+  
+      // Check response
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create blog');
+      } await response.json();
+  
+      // Success notification
+      toast.success('Blog created successfully!');
+  
+      // Clear form
+      clearForm();
+  
+      
+    } catch (error) {
+      console.error('Blog submission error:', error);
+      toast.error(error.message || 'Failed to submit blog');
+    } finally {
+      // Reset loading state
+      setIsLoading(false);
+    }
   };
+  
+  // Form clearing function
+  const clearForm = () => {
+    setTitle('');
+    setSummary('');
+    setEditableContent('');
+    setImage(null);
+  };
+  
+ 
 
   return (
     <div className="p-6 bg-gray-50">
@@ -102,7 +164,7 @@ const BlogEditor = () => {
           type="submit" 
           className="bg-blue-500 text-white px-6 py-3 rounded shadow hover:bg-blue-600 transition duration-200"
         >
-          Publish Blog
+          {isLoading ? 'Submitting...' : 'Publish Blog'}
         </button>
 
         {/* Miscellaneous Content */}
