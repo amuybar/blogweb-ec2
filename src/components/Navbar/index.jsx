@@ -83,7 +83,7 @@ const Navbar = () => {
               to="/" 
               className="text-white text-2xl font-bold flex items-center"
             >
-              MyBlog
+              Blog Universe
             </Link>
           </div>
 

@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from './components/Footer';
 
 
 const Home = lazy(() => import('./pages/Home'));
@@ -21,7 +22,6 @@ const App = () => {
     <Router>
       <div className="app">
        <Navbar/>
-       
         <div className="p-4">
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
@@ -34,6 +34,7 @@ const App = () => {
           </Suspense>
 
         </div>
+        <Footer/>
         <ToastContainer 
         position="top-right"
         autoClose={3000}

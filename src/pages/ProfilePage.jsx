@@ -25,7 +25,7 @@ const ProfilePage = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setUser(data))
+      .then((data) => setUser(data.user))
       .catch((err) => toast.error('Failed to fetch user details.'));
 
     // Fetch feeds initially

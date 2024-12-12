@@ -39,6 +39,7 @@ const AuthPage = () => {
 
       if (!isRegister) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.user.id);
       }
 
       toast.success(isRegister ? 'Registration successful!' : 'Login successful!');
