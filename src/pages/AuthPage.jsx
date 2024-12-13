@@ -35,6 +35,7 @@ const AuthPage = () => {
 
       if (!response.ok) {
         throw new Error(data.message || 'An error occurred.');
+
       }
 
       if (!isRegister) {
@@ -46,6 +47,7 @@ const AuthPage = () => {
       navigate('/');
     } catch (error) {
       toast.error(error.message);
+      console.error('Auth error:', error);
     }
   };
 
