@@ -20,7 +20,7 @@ const fetchBlogPosts = async () => {
 
     // Assuming the API returns an array of blog posts
     // Adjust the data extraction based on the actual API response structure
-    return response.data.map(post => ({
+    return response.data.data.map(post => ({
       slug: post.slug || post.id, // Use slug or fallback to id
       title: post.title,
       updatedAt: post.updatedAt ? new Date(post.updatedAt) : new Date(),
